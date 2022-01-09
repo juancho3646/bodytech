@@ -1,0 +1,420 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Bodytech laravel Documentation",
+        "description": "Technical Test Application",
+        "contact": {
+            "email": "juancho3646@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Demo API Server in Localhost"
+        }
+    ],
+    "paths": {
+        "/api/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Display a listing of products.",
+                "description": "Show all products",
+                "operationId": "ab015cc2055ac75e6d23c628675c26e7",
+                "responses": {
+                    "default": {
+                        "description": "Retrieve data successful"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Create a Product.",
+                "description": "Create a product",
+                "operationId": "7ff81b1681ff3180e5b73a2e15f2c67b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/api/products/{id}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Display an specified product",
+                "description": "Home page",
+                "operationId": "47affec446a4e21ba3cbf0b6b14abb44",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retrieve data successful"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Update the specified product.",
+                "description": "Update a product",
+                "operationId": "b0605b594dede1c8d6d6412b452efd96",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Remove the specified product from storage.",
+                "description": "Remove product from storage",
+                "operationId": "33173a96c7ab5ed4ba9ceaffb4c6003d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/addItem": {
+            "post": {
+                "tags": [
+                    "Shopping Cart"
+                ],
+                "summary": "Add Item to shopping cart.",
+                "description": "Add item to shopping cart",
+                "operationId": "ff29cf066dd1627fc8d730d638aac57f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AddItemToCartRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "default": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/removeItem/{id}": {
+            "delete": {
+                "tags": [
+                    "Shopping Cart"
+                ],
+                "summary": "Remove existing item from shopping cart",
+                "description": "Remove item to cart",
+                "operationId": "deleteItem",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/auth/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register user into API.",
+                "description": "Register a new user",
+                "operationId": "4a46c115f82e11070a4fef0c6880ec1f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login user into API.",
+                "description": "Login user into API",
+                "operationId": "b981558f87ec3946f53132922602adbe",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "user email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "user password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AddItemToCartRequest": {
+                "title": "AddItemToCartRequest",
+                "description": "Add item to shopping cart",
+                "required": [
+                    "id_product",
+                    "quantity"
+                ],
+                "properties": {
+                    "id_product": {
+                        "title": "id_product",
+                        "description": "Id of product to add",
+                        "example": 1
+                    },
+                    "quantity": {
+                        "title": "quantity",
+                        "description": "Quantity of product to add",
+                        "example": 2
+                    }
+                },
+                "type": "object"
+            },
+            "RegisterRequest": {
+                "title": "RegisterRequest",
+                "description": "Register user to access",
+                "required": [
+                    "name",
+                    "email",
+                    "password",
+                    "repeat_password"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "Name of user",
+                        "example": "Jhon"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "Email of user",
+                        "example": "Jhon@email.com"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "Password of user",
+                        "example": "Jh0n2022!"
+                    },
+                    "repeat_password": {
+                        "title": "repeat_password",
+                        "description": "Repeat password to validate",
+                        "example": "Jh0n2022!"
+                    }
+                },
+                "type": "object"
+            },
+            "Product": {
+                "title": "Product",
+                "description": "Product model",
+                "required": [
+                    "name",
+                    "description",
+                    "price",
+                    "image"
+                ],
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Id of product",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "Name of product",
+                        "example": "Barra"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "Description of product",
+                        "example": "Barra para pecho"
+                    },
+                    "price": {
+                        "title": "price",
+                        "description": "Price of product",
+                        "example": 10000
+                    },
+                    "offer_price": {
+                        "title": "offer_price",
+                        "description": "Offer price of product",
+                        "example": 8000
+                    },
+                    "expiration_offer": {
+                        "title": "expiration_offer",
+                        "description": "Expiration offer price of product",
+                        "example": "2022-02-01"
+                    },
+                    "image": {
+                        "title": "image",
+                        "description": "Image of product",
+                        "example": "http://test.com/image.jpg"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "API Endpoints of Register and Login"
+        },
+        {
+            "name": "Products",
+            "description": "API Endpoints of Products"
+        },
+        {
+            "name": "Shopping Cart",
+            "description": "API Endpoints of Shopping Cart"
+        }
+    ],
+    "security": [
+        []
+    ]
+}
