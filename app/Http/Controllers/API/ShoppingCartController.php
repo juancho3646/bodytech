@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\AddItemToCartRequest;
+use App\Http\Resources\ShoppingCartResource;
 use App\Models\Product;
 use App\Models\ShoppingCart;
 use App\Models\ShoppingCartItems;
@@ -90,5 +91,35 @@ class ShoppingCartController extends BaseController
         if (empty($shoppingCartItem)) return $this->sendError("Item not found", [], 404);
         $shoppingCartItem->delete();
         return $this->sendResponse($shoppingCartItem, "Product remove successfully");
+    }
+
+    /**
+     * Add Item to shopping cart.
+     *
+     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/api/shoppingCart/showMyCart",
+     *     tags={"Shopping Cart"},
+     *     description="Show my shopping cart and all Items",
+     *     @OA\Response(response=200, description="Successful operation"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response="default", description="Bad Request")
+     * )
+     */
+    public function showMyShoppingCart()
+    {
+        $userID = Auth::id();
+        $shoppingCart = ShoppingCart::where('id_user', $userID)->where('status', 'open')->with('items')->first();
+        if (empty($shoppingCart))  return $this->sendError("Shopping cart not found", [], 404);
+        $total = 0;
+        foreach ($shoppingCart['items'] as $item) {
+            $total += $item['total_price'];
+        }
+        $shoppingCart['total_price'] = $total;
+        $shoppingCart['tax'] = $total * 0.19;
+        $shoppingCart['price'] = $total * 0.81;
+        $shoppingCart->save();
+
+        return $this->sendResponse(new ShoppingCartResource($shoppingCart), "Shopping cart retrieved successfully");
     }
 }

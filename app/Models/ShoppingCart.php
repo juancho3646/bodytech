@@ -21,4 +21,9 @@ class ShoppingCart extends Model
         'total_price' => 'integer',
         'status' => 'string',
     ];
+
+    public function items()
+    {
+        return $this->hasMany(ShoppingCartItems::class, 'id_shopping_cart', 'id')->with('product');
+    }
 }

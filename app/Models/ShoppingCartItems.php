@@ -21,4 +21,9 @@ class ShoppingCartItems extends Model
         'unit_price' => 'integer',
         'total_price' => 'integer',
     ];
+
+    public function product()
+    {
+        return $this->hasOne(Product::class, 'id', 'id_product');
+    }
 }
