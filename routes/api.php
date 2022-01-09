@@ -37,5 +37,6 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::post('shoppingCart/addItem', 'API\ShoppingCartController@addItemToShoppingCart');
     Route::delete('shoppingCart/removeItem/{id}', 'API\ShoppingCartController@removeItemFromShoppingCart');
     Route::get('shoppingCart/myShoppingCart', 'API\ShoppingCartController@showMyShoppingCart');
+    Route::get('shoppingCart/payMyShoppingCart', 'API\ShoppingCartController@payMyShoppingCart');
     /** End Shopping Cart */
 });

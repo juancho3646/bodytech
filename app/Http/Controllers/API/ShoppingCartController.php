@@ -26,8 +26,9 @@ class ShoppingCartController extends BaseController
      *          @OA\JsonContent(ref="#/components/schemas/AddItemToCartRequest")
      *      ),
      *     @OA\Response(response=200, description="Successful operation"),
+     *     @OA\Response(response=400, description="Bad Request"),
      *     @OA\Response(response=401, description="Unauthenticated"),
-     *     @OA\Response(response="default", description="Bad Request")
+     *     @OA\Response(response=404, description="Not Found")
      * )
      */
     public function addItemToShoppingCart(AddItemToCartRequest $request)
@@ -103,7 +104,7 @@ class ShoppingCartController extends BaseController
      *     description="Show my shopping cart and all Items",
      *     @OA\Response(response=200, description="Successful operation"),
      *     @OA\Response(response=401, description="Unauthenticated"),
-     *     @OA\Response(response="default", description="Bad Request")
+     *     @OA\Response(response=404, description="Not Found")
      * )
      */
     public function showMyShoppingCart()
@@ -121,5 +122,31 @@ class ShoppingCartController extends BaseController
         $shoppingCart->save();
 
         return $this->sendResponse(new ShoppingCartResource($shoppingCart), "Shopping cart retrieved successfully");
+    }
+
+    /**
+     * Pay my shopping cart.
+     *
+     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/api/shoppingCart/payMyShoppingCart",
+     *     tags={"Shopping Cart"},
+     *     description="Pay my shopping cart",
+     *     @OA\Response(response=200, description="Successful operation"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=404, description="Not Found")
+     * )
+     */
+    public function payMyShoppingCart()
+    {
+        $userID = Auth::id();
+        $shoppingCart = ShoppingCart::where('id_user', $userID)->where('status', 'open')->first();
+        if (empty($shoppingCart))  return $this->sendError("Shopping cart not found", [], 404);
+        /*
+         * Payment gateway
+         * */
+        $shoppingCart['status'] = "sold-out";
+        $shoppingCart->save();
+        return $this->sendResponse($shoppingCart, "Thanks for your payment");
     }
 }

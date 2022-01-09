@@ -192,11 +192,14 @@
                     "200": {
                         "description": "Successful operation"
                     },
+                    "400": {
+                        "description": "Bad Request"
+                    },
                     "401": {
                         "description": "Unauthenticated"
                     },
-                    "default": {
-                        "description": "Bad Request"
+                    "404": {
+                        "description": "Not Found"
                     }
                 }
             }
@@ -229,6 +232,48 @@
                     },
                     "404": {
                         "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/shoppingCart/showMyCart": {
+            "get": {
+                "tags": [
+                    "Shopping Cart"
+                ],
+                "summary": "Add Item to shopping cart.",
+                "description": "Show my shopping cart and all Items",
+                "operationId": "040ca21d1454ac42a5457cf5c2a1d559",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/shoppingCart/payMyShoppingCart": {
+            "get": {
+                "tags": [
+                    "Shopping Cart"
+                ],
+                "summary": "Pay my shopping cart.",
+                "description": "Pay my shopping cart",
+                "operationId": "06e9ec33c24de84561054cea703b541a",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "404": {
+                        "description": "Not Found"
                     }
                 }
             }
