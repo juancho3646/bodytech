@@ -23,6 +23,7 @@ class ShoppingCartController extends BaseController
      *     path="/api/shoppingCart/addItem",
      *     tags={"Shopping Cart"},
      *     description="Add item to shopping cart",
+     *     security={{"token": {}}},
      *     @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(ref="#/components/schemas/AddItemToCartRequest")
@@ -70,6 +71,7 @@ class ShoppingCartController extends BaseController
      *     path="/api/shoppingCart/removeItem/{id}",
      *     tags={"Shopping Cart"},
      *     description="Remove item to cart",
+     *     security={{"token": {}}},
      *     @OA\Parameter(
      *          name="id",
      *          description="Product id",
@@ -104,6 +106,7 @@ class ShoppingCartController extends BaseController
      *     path="/api/shoppingCart/showMyCart",
      *     tags={"Shopping Cart"},
      *     description="Show my shopping cart and all Items",
+     *     security={{"token": {}}},
      *     @OA\Response(response=200, description="Successful operation"),
      *     @OA\Response(response=401, description="Unauthenticated"),
      *     @OA\Response(response=404, description="Not Found")
@@ -134,6 +137,7 @@ class ShoppingCartController extends BaseController
      *     path="/api/shoppingCart/payMyShoppingCart",
      *     tags={"Shopping Cart"},
      *     description="Pay my shopping cart",
+     *     security={{"token": {}}},
      *     @OA\Response(response=200, description="Successful operation"),
      *     @OA\Response(response=401, description="Unauthenticated"),
      *     @OA\Response(response=404, description="Not Found")
@@ -160,6 +164,7 @@ class ShoppingCartController extends BaseController
      *     path="/api/shoppingCart/report",
      *     tags={"Shopping Cart"},
      *     description="Report of sells by date",
+     *     security={{"token": {}}},
      *     @OA\Parameter(
      *          name="date_from",
      *          description="Initial date to Report",

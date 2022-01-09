@@ -37,6 +37,13 @@ class Controller extends BaseController
      *     name="Shopping Cart",
      *     description="API Endpoints of Shopping Cart"
      * )
+     *
+     * @OA\SecurityScheme(
+     *       securityScheme="token",
+     *       type="apiKey",
+     *       name="Authorization",
+     *       in="header",
+     * )
      */
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }

@@ -19,6 +19,7 @@ class ProductController extends BaseController
      *     path="/api/products",
      *     tags={"Products"},
      *     description="Show all products",
+     *     security={{"token": {}}},
      *     @OA\Response(response=200, description="Successful operation"),
      *     @OA\Response(response=401, description="Unauthenticated"),
      *     @OA\Response(response=404, description="Resource Not Found")
@@ -39,6 +40,7 @@ class ProductController extends BaseController
      *     path="/api/products",
      *     tags={"Products"},
      *     description="Create a product",
+     *     security={{"token": {}}},
      *     @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(ref="#/components/schemas/Product")
@@ -65,6 +67,7 @@ class ProductController extends BaseController
      *     path="/api/products/{id}",
      *     tags={"Products"},
      *     description="Home page",
+     *     security={{"token": {}}},
      *     @OA\Parameter(
      *          name="id",
      *          description="Product id",
@@ -96,6 +99,7 @@ class ProductController extends BaseController
      *     path="/api/products/{id}",
      *     tags={"Products"},
      *     description="Update a product",
+     *     security={{"token": {}}},
      *     @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(ref="#/components/schemas/Product")
@@ -134,6 +138,7 @@ class ProductController extends BaseController
      *     path="/api/products/{id}",
      *     tags={"Products"},
      *     description="Remove product from storage",
+     *     security={{"token": {}}},
      *     @OA\Parameter(
      *          name="id",
      *          description="Product id",
@@ -165,6 +170,7 @@ class ProductController extends BaseController
      *     path="/api/products/uploadFile",
      *     tags={"Products"},
      *     description="Upload products from .csv",
+     *     security={{"token": {}}},
      *     @OA\Parameter(
      *          name="products_file",
      *          description="Products file",
