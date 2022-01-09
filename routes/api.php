@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::get('products/{id}', 'API\ProductController@show');
     Route::put('products/{id}', 'API\ProductController@update');
     Route::delete('products/{id}', 'API\ProductController@destroy');
+    Route::post('products/uploadFile', 'API\ProductController@uploadFile');
     /** End Products */
 
     /** Shopping Cart */

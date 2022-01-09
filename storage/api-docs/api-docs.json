@@ -170,6 +170,38 @@
                 }
             }
         },
+        "/api/products/uploadFile": {
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Upload products from file .csv",
+                "description": "Upload products from .csv",
+                "operationId": "67524b44611be68d6ed5f5848b3386e2",
+                "parameters": [
+                    {
+                        "name": "products_file",
+                        "in": "query",
+                        "description": "Products file",
+                        "required": true,
+                        "schema": {
+                            "type": "file"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
         "/api/shoppingCart/addItem": {
             "post": {
                 "tags": [
