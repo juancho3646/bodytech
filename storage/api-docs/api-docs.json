@@ -310,6 +310,44 @@
                 }
             }
         },
+        "/api/shoppingCart/report": {
+            "get": {
+                "tags": [
+                    "Shopping Cart"
+                ],
+                "summary": "Get shopping cart by range dates.",
+                "description": "Report of sells by date",
+                "operationId": "9c4add3324e2ad7724edcf487c521fa8",
+                "parameters": [
+                    {
+                        "name": "date_from",
+                        "in": "path",
+                        "description": "Initial date to Report",
+                        "required": true,
+                        "schema": {
+                            "type": "Date"
+                        }
+                    },
+                    {
+                        "name": "date_to",
+                        "in": "path",
+                        "description": "End date to Report",
+                        "required": true,
+                        "schema": {
+                            "type": "Date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
         "/api/auth/register": {
             "post": {
                 "tags": [
@@ -429,6 +467,27 @@
                         "title": "repeat_password",
                         "description": "Repeat password to validate",
                         "example": "Jh0n2022!"
+                    }
+                },
+                "type": "object"
+            },
+            "ReportRequest": {
+                "title": "ReportRequest",
+                "description": "Request to reports",
+                "required": [
+                    "date_from",
+                    "date_to"
+                ],
+                "properties": {
+                    "date_from": {
+                        "title": "date_from",
+                        "description": "Initial date to Report",
+                        "example": "2022-01-01"
+                    },
+                    "date_to": {
+                        "title": "date_to",
+                        "description": "End date to Report",
+                        "example": "2022-01-01"
                     }
                 },
                 "type": "object"

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\AddItemToCartRequest;
+use App\Http\Requests\ReportRequest;
 use App\Http\Resources\ShoppingCartResource;
 use App\Models\Product;
 use App\Models\ShoppingCart;
 use App\Models\ShoppingCartItems;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
@@ -148,5 +150,54 @@ class ShoppingCartController extends BaseController
         $shoppingCart['status'] = "sold-out";
         $shoppingCart->save();
         return $this->sendResponse($shoppingCart, "Thanks for your payment");
+    }
+
+    /**
+     * Get shopping cart by range dates.
+     *
+     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/api/shoppingCart/report",
+     *     tags={"Shopping Cart"},
+     *     description="Report of sells by date",
+     *     @OA\Parameter(
+     *          name="date_from",
+     *          description="Initial date to Report",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="Date"
+     *          )
+     *      ),
+     *     @OA\Parameter(
+     *          name="date_to",
+     *          description="End date to Report",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="Date"
+     *          )
+     *      ),
+     *     @OA\Response(response=200, description="Successful operation"),
+     *     @OA\Response(response=401, description="Unauthenticated")
+     * )
+     */
+    public function report(ReportRequest $request)
+    {
+        $input = $request->all();
+        Log::info($input);
+        $shoppingCarts = ShoppingCart::where('status', 'sold-out')->whereBetween('created_at', [$input['date_from'], $input['date_to']])->with('items')->get();
+        $count = 0;
+        $total = 0;
+        foreach ($shoppingCarts as $shoppingCart) {
+            $total += $shoppingCart['total_price'];
+            $count += 1;
+        }
+        $response = [
+            "count" => $count,
+            "total" => $total,
+            "shoppingCarts" => ShoppingCartResource::collection($shoppingCarts)
+        ];
+        return $this->sendResponse($response, "Thanks for your payment");
     }
 }
