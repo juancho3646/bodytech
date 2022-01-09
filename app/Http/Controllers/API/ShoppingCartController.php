@@ -6,6 +6,8 @@ use App\Http\Requests\AddItemToCartRequest;
 use App\Models\Product;
 use App\Models\ShoppingCart;
 use App\Models\ShoppingCartItems;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
 class ShoppingCartController extends BaseController
@@ -15,7 +17,7 @@ class ShoppingCartController extends BaseController
      *
      * @return \Illuminate\Http\Response
      * @OA\Post(
-     *     path="/api/addItem",
+     *     path="/api/shoppingCart/addItem",
      *     tags={"Shopping Cart"},
      *     description="Add item to shopping cart",
      *     @OA\RequestBody(
@@ -29,7 +31,7 @@ class ShoppingCartController extends BaseController
      */
     public function addItemToShoppingCart(AddItemToCartRequest $request)
     {
-        $userID = 1;
+        $userID = Auth::id();
         $shoppingCart = ShoppingCart::where('id_user', $userID)->where('status', 'open')->first();
         if (empty($shoppingCart)) {
             $shoppingCart = new ShoppingCart([
@@ -43,6 +45,8 @@ class ShoppingCartController extends BaseController
         }
         $product = Product::find($request->input('id_product'));
         if (empty($product)) return $this->sendError("Product not found", [], 404);
+        $shoppingCartItem = ShoppingCartItems::where('id_shopping_cart', $shoppingCart['id'])->where('id_product', $product['id'])->first();
+        if (!empty($shoppingCartItem)) return $this->sendError("Item exist", [], 400);
         $unitPrice = $product['offer_price'] != 0 ? $product['offer_price'] : $product['price'];
         $shoppingCartItem = new ShoppingCartItems([
             'id_shopping_cart' => $shoppingCart['id'],
@@ -59,8 +63,7 @@ class ShoppingCartController extends BaseController
      * Remove existing item from shopping cart
      *
      * @OA\Delete (
-     *     path="/api/removeItem/{id}",
-     *     operationId="deleteItem",
+     *     path="/api/shoppingCart/removeItem/{id}",
      *     tags={"Shopping Cart"},
      *     description="Remove item to cart",
      *     @OA\Parameter(
@@ -79,11 +82,12 @@ class ShoppingCartController extends BaseController
      */
     public function removeItemFromShoppingCart(int $id)
     {
-        $userID = 1;
+        $userID = Auth::id();
         $shoppingCart = ShoppingCart::where('id_user', $userID)->where('status', 'open')->first();
         $product = Product::find($id);
         if (empty($product)) return $this->sendError("Product not found", [], 404);
         $shoppingCartItem = ShoppingCartItems::where('id_shopping_cart', $shoppingCart['id'])->where('id_product', $id)->first();
+        if (empty($shoppingCartItem)) return $this->sendError("Item not found", [], 404);
         $shoppingCartItem->delete();
         return $this->sendResponse($shoppingCartItem, "Product remove successfully");
     }

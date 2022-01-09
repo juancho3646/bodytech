@@ -17,7 +17,9 @@ class ProductController extends BaseController
      *     path="/api/products",
      *     tags={"Products"},
      *     description="Show all products",
-     *     @OA\Response(response="default", description="Retrieve data successful")
+     *     @OA\Response(response=200, description="Successful operation"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=404, description="Resource Not Found")
      * )
      */
     public function index()

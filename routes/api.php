@@ -32,4 +32,9 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::put('products/{id}', 'API\ProductController@update');
     Route::delete('products/{id}', 'API\ProductController@destroy');
     /** End Products */
+
+    /** Shopping Cart */
+    Route::post('shoppingCart/addItem', 'API\ShoppingCartController@addItemToShoppingCart');
+    Route::delete('shoppingCart/removeItem/{id}', 'API\ShoppingCartController@removeItemFromShoppingCart');
+    /** End Shopping Cart */
 });

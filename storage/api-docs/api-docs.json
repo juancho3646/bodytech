@@ -24,8 +24,14 @@
                 "description": "Show all products",
                 "operationId": "ab015cc2055ac75e6d23c628675c26e7",
                 "responses": {
-                    "default": {
-                        "description": "Retrieve data successful"
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
                     }
                 }
             },
@@ -164,14 +170,14 @@
                 }
             }
         },
-        "/api/addItem": {
+        "/api/shoppingCart/addItem": {
             "post": {
                 "tags": [
                     "Shopping Cart"
                 ],
                 "summary": "Add Item to shopping cart.",
                 "description": "Add item to shopping cart",
-                "operationId": "ff29cf066dd1627fc8d730d638aac57f",
+                "operationId": "012a245eb247227db8fa04a794823a8b",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -195,14 +201,14 @@
                 }
             }
         },
-        "/api/removeItem/{id}": {
+        "/api/shoppingCart/removeItem/{id}": {
             "delete": {
                 "tags": [
                     "Shopping Cart"
                 ],
                 "summary": "Remove existing item from shopping cart",
                 "description": "Remove item to cart",
-                "operationId": "deleteItem",
+                "operationId": "12b5218427645774c6b14d2fcaf07052",
                 "parameters": [
                     {
                         "name": "id",
